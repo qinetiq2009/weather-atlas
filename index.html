@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-card">
+      <div class="hero-copy">
+        <p class="eyebrow">Weather Atlas</p>
+        <h1>Weather Atlas</h1>
+      </div>
+
+      <div class="hero-side">
+        <section class="clock-panel" aria-live="polite">
+          <p class="search-label">Local date</p>
+          <p class="clock-date" id="clock-date">--</p>
+          <p class="search-label">Local time</p>
+          <p class="clock-time" id="clock-time">--</p>
+        </section>
+
+        <form class="search-panel" id="search-form">
+          <label class="search-label" for="city-input">Search city</label>
+          <div class="search-row">
+            <input
+              id="city-input"
+              name="city"
+              type="text"
+              placeholder="Try Sydney, Tokyo, or Vancouver"
+              autocomplete="off"
+              required
+            >
+            <button type="submit">Check Weather</button>
+          </div>
+          <p class="status-message" id="status-message">Loading a starter forecast...</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="current-weather" id="current-weather" aria-live="polite">
+      <div class="location-block">
+        <p class="section-label">Now</p>
+        <h2 id="location-name">--</h2>
+        <p id="location-meta">--</p>
+      </div>
+
+      <div class="temperature-block">
+        <div class="temp-main">
+          <span id="current-temp">--</span>
+          <span class="temp-unit">°C</span>
+        </div>
+        <p id="current-summary">Waiting for forecast...</p>
+      </div>
+
+      <div class="detail-grid">
+        <article>
+          <p class="detail-label">Feels like</p>
+          <p class="detail-value" id="feels-like">--</p>
+        </article>
+        <article>
+          <p class="detail-label">Wind</p>
+          <p class="detail-value" id="wind-speed">--</p>
+        </article>
+        <article>
+          <p class="detail-label">Humidity</p>
+          <p class="detail-value" id="humidity">--</p>
+        </article>
+        <article>
+          <p class="detail-label">Rain chance</p>
+          <p class="detail-value" id="rain-chance">--</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="forecast-layout">
+      <section class="hourly-panel">
+        <div class="panel-heading panel-heading-split">
+          <div>
+            <p class="section-label">Next 24 Hours</p>
+            <h3>Hourly forecast</h3>
+          </div>
+          <div class="scroll-controls" aria-label="Hourly forecast controls">
+            <button type="button" class="scroll-button" id="hourly-prev" aria-label="Scroll hourly forecast left">←</button>
+            <button type="button" class="scroll-button" id="hourly-next" aria-label="Scroll hourly forecast right">→</button>
+          </div>
+        </div>
+        <div class="hourly-scroll" id="hourly-forecast"></div>
+      </section>
+
+      <section class="daily-panel">
+        <div class="panel-heading">
+          <p class="section-label">Next 7 Days</p>
+          <h3>Daily outlook</h3>
+        </div>
+        <div class="daily-list" id="daily-forecast"></div>
+      </section>
+    </section>
+  </main>
+
+  <template id="hour-card-template">
+    <article class="hour-card">
+      <p class="hour-time"></p>
+      <p class="hour-icon"></p>
+      <p class="hour-temp"></p>
+      <p class="hour-rain"></p>
+      <p class="hour-humidity"></p>
+    </article>
+  </template>
+
+  <template id="day-card-template">
+    <article class="day-card">
+      <div>
+        <p class="day-name"></p>
+        <p class="day-summary"></p>
+        <p class="day-humidity"></p>
+      </div>
+      <div class="day-range">
+        <span class="day-high"></span>
+        <span class="day-low"></span>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
