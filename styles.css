@@ -43,6 +43,15 @@ body {
   transition: background 240ms ease, color 240ms ease;
 }
 
+body.is-refreshing .current-weather,
+body.is-refreshing .hourly-panel,
+body.is-refreshing .daily-panel,
+body.is-refreshing .quote-card,
+body.is-refreshing .clock-panel {
+  opacity: 0.68;
+  transform: translateY(4px);
+}
+
 body::before,
 body::after {
   content: "";
@@ -294,6 +303,11 @@ body[data-theme="night"] .search-row input {
   margin-top: 0.35rem;
 }
 
+.search-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
 .search-row input {
   width: 100%;
   min-height: 3.1rem;
@@ -303,6 +317,63 @@ body[data-theme="night"] .search-row input {
   font: inherit;
   background: #fff;
   color: var(--text);
+}
+
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 0;
+  right: 0;
+  display: none;
+  z-index: 10;
+  padding: 0.35rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(23, 36, 46, 0.08);
+  box-shadow: 0 12px 28px rgba(23, 36, 46, 0.12);
+}
+
+.search-suggestions.is-open {
+  display: grid;
+  gap: 0.2rem;
+}
+
+body[data-theme="night"] .search-suggestions {
+  background: rgba(8, 16, 30, 0.96);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.suggestion-item {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 0.7rem 0.8rem;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.suggestion-item:hover,
+.suggestion-item:focus-visible {
+  background: rgba(23, 36, 46, 0.06);
+}
+
+body[data-theme="night"] .suggestion-item:hover,
+body[data-theme="night"] .suggestion-item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.suggestion-name,
+.suggestion-meta {
+  display: block;
+}
+
+.suggestion-meta {
+  margin-top: 0.08rem;
+  color: var(--muted);
+  font-size: 0.83rem;
 }
 
 .search-actions {
@@ -373,6 +444,12 @@ body[data-theme="night"] .location-button {
 .location-block p,
 .temperature-block p {
   margin: 0;
+  color: var(--muted);
+}
+
+.last-updated {
+  margin-top: 0.75rem;
+  font-size: 0.84rem;
   color: var(--muted);
 }
 

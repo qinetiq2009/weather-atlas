@@ -1,6 +1,7 @@
 const statusMessage = document.getElementById("status-message");
 const searchForm = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
+const searchSuggestions = document.getElementById("search-suggestions");
 const locationButton = document.getElementById("location-button");
 const hourlyContainer = document.getElementById("hourly-forecast");
 const dailyContainer = document.getElementById("daily-forecast");
@@ -19,8 +20,11 @@ const quoteWeatherIcon = document.getElementById("quote-weather-icon");
 const quoteWeatherTemp = document.getElementById("quote-weather-temp");
 const quoteWeatherRange = document.getElementById("quote-weather-range");
 const quoteWeatherHumidity = document.getElementById("quote-weather-humidity");
+const lastUpdated = document.getElementById("last-updated");
 
 let activeTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let suggestionAbortController = null;
+let suggestionDebounce = null;
 
 const dailyQuotes = [
   {
@@ -246,6 +250,79 @@ async function fetchWeatherForCity(city) {
   );
 }
 
+async function fetchCitySuggestions(query) {
+  const geocodeUrl = new URL("https://geocoding-api.open-meteo.com/v1/search");
+  geocodeUrl.searchParams.set("name", query);
+  geocodeUrl.searchParams.set("count", "5");
+  geocodeUrl.searchParams.set("language", "en");
+  geocodeUrl.searchParams.set("format", "json");
+
+  if (suggestionAbortController) {
+    suggestionAbortController.abort();
+  }
+
+  suggestionAbortController = new AbortController();
+  const response = await fetch(geocodeUrl.toString(), { signal: suggestionAbortController.signal });
+  if (!response.ok) {
+    throw new Error(`Suggestion request failed with status ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.results || [];
+}
+
+function closeSuggestions() {
+  searchSuggestions.innerHTML = "";
+  searchSuggestions.classList.remove("is-open");
+}
+
+function renderSuggestions(results) {
+  if (!results.length) {
+    closeSuggestions();
+    return;
+  }
+
+  searchSuggestions.innerHTML = "";
+
+  results.forEach((result) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "suggestion-item";
+    button.innerHTML =
+      `<span class="suggestion-name">${result.name}</span>` +
+      `<span class="suggestion-meta">${result.country}${result.admin1 ? `, ${result.admin1}` : ""}</span>`;
+    button.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+      cityInput.value = result.name;
+      closeSuggestions();
+      loadWeather(result.name);
+    });
+    searchSuggestions.appendChild(button);
+  });
+
+  searchSuggestions.classList.add("is-open");
+}
+
+function queueSuggestions(query) {
+  window.clearTimeout(suggestionDebounce);
+
+  if (query.length < 2) {
+    closeSuggestions();
+    return;
+  }
+
+  suggestionDebounce = window.setTimeout(async () => {
+    try {
+      const results = await fetchCitySuggestions(query);
+      renderSuggestions(results);
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        closeSuggestions();
+      }
+    }
+  }, 220);
+}
+
 function setLocationDisplay(location) {
   document.getElementById("location-name").textContent = location.name;
   document.getElementById("location-meta").textContent =
@@ -285,6 +362,13 @@ function renderCurrent(location, forecastData) {
       `H ${Math.round(forecastData.daily.temperature_2m_max[0])}${String.fromCharCode(176)} / ` +
       `L ${Math.round(forecastData.daily.temperature_2m_min[0])}${String.fromCharCode(176)}`;
     quoteWeatherHumidity.textContent = `Humidity ${Math.round(current.relative_humidity_2m)}%`;
+  }
+  if (lastUpdated) {
+    lastUpdated.textContent = `Last updated ${new Intl.DateTimeFormat(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: activeTimeZone
+    }).format(new Date())}`;
   }
   setTheme(Boolean(current.is_day));
 }
@@ -380,15 +464,19 @@ async function renderWeatherResult(result, successMessage) {
   renderDaily(result.forecastData);
   updateHourlyControls();
   updateStatus(successMessage);
+  document.body.classList.remove("is-refreshing");
 }
 
 async function loadWeather(city) {
   updateStatus(`Loading forecast for ${city}...`);
+  document.body.classList.add("is-refreshing");
+  closeSuggestions();
 
   try {
     const result = await fetchWeatherForCity(city);
     await renderWeatherResult(result, `Showing weather for ${result.location.name}, ${result.location.country}.`);
   } catch (error) {
+    document.body.classList.remove("is-refreshing");
     updateStatus(error.message || "Something went wrong while loading weather.", true);
   }
 }
@@ -400,6 +488,8 @@ function loadCurrentLocation() {
   }
 
   updateStatus("Fetching weather for your current location...");
+  document.body.classList.add("is-refreshing");
+  closeSuggestions();
 
   navigator.geolocation.getCurrentPosition(async (position) => {
     try {
@@ -410,15 +500,37 @@ function loadCurrentLocation() {
       );
       await renderWeatherResult(result, "Showing weather for your current location.");
     } catch (error) {
+      document.body.classList.remove("is-refreshing");
       updateStatus(error.message || "Unable to load weather for your location.", true);
     }
   }, () => {
+    document.body.classList.remove("is-refreshing");
     updateStatus("Location access was denied. Please allow location access and try again.", true);
   }, {
     enableHighAccuracy: true,
     timeout: 10000
   });
 }
+
+cityInput.addEventListener("input", () => {
+  queueSuggestions(cityInput.value.trim());
+});
+
+cityInput.addEventListener("focus", () => {
+  if (cityInput.value.trim().length >= 2) {
+    queueSuggestions(cityInput.value.trim());
+  }
+});
+
+cityInput.addEventListener("blur", () => {
+  window.setTimeout(closeSuggestions, 120);
+});
+
+document.addEventListener("click", (event) => {
+  if (!searchSuggestions.contains(event.target) && event.target !== cityInput) {
+    closeSuggestions();
+  }
+});
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
