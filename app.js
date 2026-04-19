@@ -11,8 +11,41 @@ const hourlyNextButton = document.getElementById("hourly-next");
 const clockDate = document.getElementById("clock-date");
 const clockTime = document.getElementById("clock-time");
 const currentIcon = document.getElementById("current-icon");
+const heroQuote = document.getElementById("hero-quote");
+const heroAttribution = document.getElementById("hero-attribution");
 
 let activeTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const dailyQuotes = [
+  {
+    quote: "Wherever you go, no matter what the weather, always bring your own sunshine.",
+    author: "Susan Gale"
+  },
+  {
+    quote: "To appreciate the sun, you have to know what rain is.",
+    author: "Anonymous"
+  },
+  {
+    quote: "The sound of rain needs no translation.",
+    author: "Alan Watts"
+  },
+  {
+    quote: "Even the darkest night will end and the sun will rise.",
+    author: "Victor Hugo"
+  },
+  {
+    quote: "Clouds come floating into my life, no longer to carry rain, but to add color to my sunset sky.",
+    author: "Rabindranath Tagore"
+  },
+  {
+    quote: "There is no such thing as bad weather, only different kinds of good weather.",
+    author: "John Ruskin"
+  },
+  {
+    quote: "A change in the weather is sufficient to recreate the world and ourselves.",
+    author: "Marcel Proust"
+  }
+];
 
 const weatherCodeMap = {
   0: { label: "Clear sky", kind: "clear" },
@@ -83,6 +116,15 @@ function formatDay(dateString, offset = 0) {
   return new Intl.DateTimeFormat(undefined, {
     weekday: "long"
   }).format(new Date(`${dateString}T12:00:00`));
+}
+
+function setDailyQuote() {
+  const now = new Date();
+  const daySeed = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+  const selectedQuote = dailyQuotes[Math.abs(daySeed) % dailyQuotes.length];
+
+  heroQuote.textContent = `"${selectedQuote.quote}"`;
+  heroAttribution.textContent = selectedQuote.author;
 }
 
 function formatClockTime(timeString) {
@@ -384,6 +426,7 @@ hourlyContainer.addEventListener("scroll", updateHourlyControls);
 window.addEventListener("resize", updateHourlyControls);
 
 updateClock();
+setDailyQuote();
 window.setInterval(updateClock, 1000);
 
 loadWeather("Sydney");
