@@ -15,6 +15,7 @@ const heroQuote = document.getElementById("hero-quote");
 const heroAttribution = document.getElementById("hero-attribution");
 const quoteWeatherIcon = document.getElementById("quote-weather-icon");
 const quoteWeatherTemp = document.getElementById("quote-weather-temp");
+const quoteWeatherRange = document.getElementById("quote-weather-range");
 
 let activeTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -270,9 +271,12 @@ function renderCurrent(location, forecastData) {
   document.getElementById("sunrise-time").textContent = sunrise ? formatClockTime(sunrise) : "--";
   document.getElementById("sunset-time").textContent = sunset ? formatClockTime(sunset) : "--";
   currentIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
-  if (quoteWeatherIcon && quoteWeatherTemp) {
+  if (quoteWeatherIcon && quoteWeatherTemp && quoteWeatherRange) {
     quoteWeatherIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
     quoteWeatherTemp.textContent = `${Math.round(current.temperature_2m)}${String.fromCharCode(176)}C`;
+    quoteWeatherRange.textContent =
+      `H ${Math.round(forecastData.daily.temperature_2m_max[0])}${String.fromCharCode(176)} / ` +
+      `L ${Math.round(forecastData.daily.temperature_2m_min[0])}${String.fromCharCode(176)}`;
   }
   setTheme(Boolean(current.is_day));
 }

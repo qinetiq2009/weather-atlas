@@ -157,6 +157,12 @@ body[data-theme="night"] .quote-card {
   color: var(--text);
 }
 
+.quote-weather-reading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
 .quote-weather-icon {
   width: 1.6rem;
   height: 1.6rem;
@@ -172,6 +178,13 @@ body[data-theme="night"] .quote-card {
   margin: 0;
   font-size: 0.95rem;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.quote-weather-range {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
   white-space: nowrap;
 }
 
