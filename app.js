@@ -85,6 +85,14 @@ function formatDay(dateString, offset = 0) {
   }).format(new Date(`${dateString}T12:00:00`));
 }
 
+function formatClockTime(timeString) {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: activeTimeZone
+  }).format(new Date(timeString));
+}
+
 function setClockTimeZone(timeZone) {
   activeTimeZone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
   updateClock();
@@ -199,18 +207,22 @@ function renderCurrent(location, forecastData) {
   const rainChance = currentHourIndex >= 0
     ? forecastData.hourly.precipitation_probability[currentHourIndex]
     : forecastData.daily.precipitation_probability_max[0];
+  const sunrise = forecastData.daily.sunrise?.[0];
+  const sunset = forecastData.daily.sunset?.[0];
   const weather = getWeatherMeta(current.weather_code);
 
   setLocationDisplay(location);
+  setClockTimeZone(forecastData.timezone);
   document.getElementById("current-temp").textContent = Math.round(current.temperature_2m);
   document.getElementById("current-summary").textContent = weather.label;
   document.getElementById("feels-like").textContent = formatTemp(current.apparent_temperature);
   document.getElementById("wind-speed").textContent = formatWind(current.wind_speed_10m);
   document.getElementById("humidity").textContent = formatPercent(current.relative_humidity_2m);
   document.getElementById("rain-chance").textContent = formatPercent(rainChance);
+  document.getElementById("sunrise-time").textContent = sunrise ? formatClockTime(sunrise) : "--";
+  document.getElementById("sunset-time").textContent = sunset ? formatClockTime(sunset) : "--";
   currentIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
   setTheme(Boolean(current.is_day));
-  setClockTimeZone(forecastData.timezone);
 }
 
 function renderHourly(forecastData) {
