@@ -119,6 +119,10 @@ function formatDay(dateString, offset = 0) {
 }
 
 function setDailyQuote() {
+  if (!heroQuote || !heroAttribution) {
+    return;
+  }
+
   const now = new Date();
   const daySeed = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
   const selectedQuote = dailyQuotes[Math.abs(daySeed) % dailyQuotes.length];
