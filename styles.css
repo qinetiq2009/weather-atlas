@@ -6,9 +6,26 @@
   --text: #17242e;
   --muted: #5a6a72;
   --accent: #d3643b;
-  --accent-soft: #f4d4b1;
   --border: rgba(23, 36, 46, 0.08);
   --shadow: 0 20px 60px rgba(23, 36, 46, 0.12);
+  --glow-a: rgba(244, 212, 177, 0.65);
+  --glow-b: rgba(124, 181, 202, 0.32);
+  --button-text: #ffffff;
+}
+
+body[data-theme="night"] {
+  --bg-top: #0e1b31;
+  --bg-bottom: #20395d;
+  --panel: rgba(8, 16, 30, 0.62);
+  --panel-strong: rgba(13, 24, 42, 0.9);
+  --text: #eef4ff;
+  --muted: #aab7ca;
+  --accent: #f2c36b;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 20px 60px rgba(1, 8, 20, 0.42);
+  --glow-a: rgba(94, 129, 255, 0.26);
+  --glow-b: rgba(255, 211, 128, 0.12);
+  --button-text: #0f1c31;
 }
 
 * {
@@ -23,6 +40,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
     linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  transition: background 240ms ease, color 240ms ease;
 }
 
 body::before,
@@ -41,7 +59,7 @@ body::before {
   height: 18rem;
   top: 4rem;
   right: 6rem;
-  background: rgba(244, 212, 177, 0.65);
+  background: var(--glow-a);
 }
 
 body::after {
@@ -49,7 +67,7 @@ body::after {
   height: 12rem;
   left: 5rem;
   bottom: 4rem;
-  background: rgba(124, 181, 202, 0.32);
+  background: var(--glow-b);
 }
 
 .app-shell {
@@ -66,6 +84,7 @@ body::after {
   border: 1px solid var(--border);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
+  transition: background 240ms ease, border-color 240ms ease;
 }
 
 .hero-card {
@@ -96,13 +115,6 @@ body::after {
   max-width: 12ch;
 }
 
-.hero-text {
-  max-width: 54ch;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
 .hero-side {
   display: grid;
   gap: 1rem;
@@ -115,6 +127,19 @@ body::after {
   border-radius: 24px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.95));
   border: 1px solid rgba(23, 36, 46, 0.06);
+  transition: background 240ms ease, border-color 240ms ease;
+}
+
+body[data-theme="night"] .clock-panel,
+body[data-theme="night"] .search-panel,
+body[data-theme="night"] .detail-grid article,
+body[data-theme="night"] .hour-card,
+body[data-theme="night"] .day-card,
+body[data-theme="night"] .scroll-button,
+body[data-theme="night"] .search-row input {
+  background: rgba(8, 16, 30, 0.84);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text);
 }
 
 .clock-panel {
@@ -145,34 +170,57 @@ body::after {
   margin-top: 0.5rem;
 }
 
-.search-row input,
-.search-row button {
+.search-row input {
+  width: 100%;
   min-height: 3.4rem;
   border-radius: 18px;
   border: 0;
-  font: inherit;
-}
-
-.search-row input {
-  flex: 1;
   padding: 0 1rem;
+  font: inherit;
   background: #fff;
   color: var(--text);
 }
 
-.search-row button {
-  padding: 0 1.2rem;
-  background: var(--text);
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 160ms ease, background 160ms ease;
+.search-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
-.search-row button:hover,
-.search-row button:focus-visible {
+.search-actions button {
+  min-height: 3.2rem;
+  border-radius: 18px;
+  border: 0;
+  padding: 0 1.2rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.search-actions button:hover,
+.search-actions button:focus-visible {
   transform: translateY(-1px);
+}
+
+.search-actions button[type="submit"] {
+  background: var(--text);
+  color: var(--button-text);
+}
+
+.search-actions button[type="submit"]:hover,
+.search-actions button[type="submit"]:focus-visible {
   background: #213744;
+}
+
+.location-button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(23, 36, 46, 0.12);
+}
+
+body[data-theme="night"] .location-button {
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .status-message {
@@ -199,6 +247,24 @@ body::after {
 .temperature-block p {
   margin: 0;
   color: var(--muted);
+}
+
+.current-visual {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.current-icon {
+  width: 5rem;
+  height: 5rem;
+  color: var(--accent);
+}
+
+.current-icon svg,
+.hour-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .temp-main {
@@ -230,6 +296,7 @@ body::after {
   border-radius: 22px;
   background: var(--panel-strong);
   border: 1px solid rgba(23, 36, 46, 0.06);
+  transition: background 240ms ease, border-color 240ms ease;
 }
 
 .detail-grid article {
@@ -359,8 +426,10 @@ body::after {
 }
 
 .hour-icon {
-  margin: 0.65rem 0;
-  font-size: 1.65rem;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.65rem auto;
+  color: var(--accent);
 }
 
 .hour-temp {
@@ -440,10 +509,6 @@ body::after {
     padding: 1.2rem;
   }
 
-  .search-row {
-    flex-direction: column;
-  }
-
   .detail-grid {
     grid-template-columns: 1fr;
   }
@@ -451,5 +516,15 @@ body::after {
   .panel-heading-split {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .search-actions,
+  .current-visual {
+    flex-direction: column;
+  }
+
+  .current-visual {
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
