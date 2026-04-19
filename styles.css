@@ -261,6 +261,27 @@ body[data-theme="night"] .search-row input {
   margin-top: 0.35rem;
 }
 
+.clock-time-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.clock-solar {
+  display: grid;
+  gap: 0.3rem;
+  padding-bottom: 0.25rem;
+}
+
+.clock-solar-item {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
 .search-row {
   display: flex;
   gap: 0.75rem;
@@ -639,6 +660,19 @@ body[data-theme="night"] .location-button {
   .search-actions,
   .current-visual {
     flex-direction: column;
+  }
+
+  .clock-time-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clock-solar {
+    padding-bottom: 0;
+  }
+
+  .clock-solar-item {
+    text-align: left;
   }
 
   .current-visual {

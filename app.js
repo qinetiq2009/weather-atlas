@@ -10,6 +10,8 @@ const hourlyPrevButton = document.getElementById("hourly-prev");
 const hourlyNextButton = document.getElementById("hourly-next");
 const clockDate = document.getElementById("clock-date");
 const clockTime = document.getElementById("clock-time");
+const clockSunrise = document.getElementById("clock-sunrise");
+const clockSunset = document.getElementById("clock-sunset");
 const currentIcon = document.getElementById("current-icon");
 const heroQuote = document.getElementById("hero-quote");
 const heroAttribution = document.getElementById("hero-attribution");
@@ -270,6 +272,10 @@ function renderCurrent(location, forecastData) {
   document.getElementById("rain-chance").textContent = formatPercent(rainChance);
   document.getElementById("sunrise-time").textContent = sunrise ? formatClockTime(sunrise) : "--";
   document.getElementById("sunset-time").textContent = sunset ? formatClockTime(sunset) : "--";
+  if (clockSunrise && clockSunset) {
+    clockSunrise.textContent = `Sunrise ${sunrise ? formatClockTime(sunrise) : "--"}`;
+    clockSunset.textContent = `Sunset ${sunset ? formatClockTime(sunset) : "--"}`;
+  }
   currentIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
   if (quoteWeatherIcon && quoteWeatherTemp && quoteWeatherRange) {
     quoteWeatherIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
