@@ -18,6 +18,7 @@ const heroAttribution = document.getElementById("hero-attribution");
 const quoteWeatherIcon = document.getElementById("quote-weather-icon");
 const quoteWeatherTemp = document.getElementById("quote-weather-temp");
 const quoteWeatherRange = document.getElementById("quote-weather-range");
+const quoteWeatherHumidity = document.getElementById("quote-weather-humidity");
 
 let activeTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -277,12 +278,13 @@ function renderCurrent(location, forecastData) {
     clockSunset.textContent = `Sunset ${sunset ? formatClockTime(sunset) : "--"}`;
   }
   currentIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
-  if (quoteWeatherIcon && quoteWeatherTemp && quoteWeatherRange) {
+  if (quoteWeatherIcon && quoteWeatherTemp && quoteWeatherRange && quoteWeatherHumidity) {
     quoteWeatherIcon.innerHTML = createWeatherIcon(weather.kind, Boolean(current.is_day));
     quoteWeatherTemp.textContent = `${Math.round(current.temperature_2m)}${String.fromCharCode(176)}C`;
     quoteWeatherRange.textContent =
       `H ${Math.round(forecastData.daily.temperature_2m_max[0])}${String.fromCharCode(176)} / ` +
       `L ${Math.round(forecastData.daily.temperature_2m_min[0])}${String.fromCharCode(176)}`;
+    quoteWeatherHumidity.textContent = `Humidity ${Math.round(current.relative_humidity_2m)}%`;
   }
   setTheme(Boolean(current.is_day));
 }
