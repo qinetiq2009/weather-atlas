@@ -149,6 +149,13 @@ function formatClockTime(timeString) {
   }).format(new Date(timeString));
 }
 
+function formatShortClockTime(timeString) {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(new Date(timeString));
+}
+
 function setClockTimeZone(timeZone) {
   activeTimeZone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
   updateClock();
@@ -424,7 +431,9 @@ function renderDaily(forecastData) {
     weather_code: codes,
     temperature_2m_max: maxTemps,
     temperature_2m_min: minTemps,
-    relative_humidity_2m_mean: humidity
+    relative_humidity_2m_mean: humidity,
+    sunrise,
+    sunset
   } = forecastData.daily;
 
   time.forEach((dayTime, index) => {
@@ -436,6 +445,8 @@ function renderDaily(forecastData) {
     card.querySelector(".day-humidity").textContent = `${formatPercent(humidity[index])} avg humidity`;
     card.querySelector(".day-high").textContent = `High ${formatTemp(maxTemps[index])}`;
     card.querySelector(".day-low").textContent = `Low ${formatTemp(minTemps[index])}`;
+    card.querySelector(".day-solar").textContent =
+      `Sunrise ${formatShortClockTime(sunrise[index])} / Sunset ${formatShortClockTime(sunset[index])}`;
     dailyContainer.appendChild(card);
   });
 }

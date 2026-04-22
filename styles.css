@@ -675,8 +675,21 @@ body[data-theme="night"] .location-button {
   white-space: nowrap;
 }
 
+.day-meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
+}
+
 .day-high {
   font-weight: 700;
+}
+
+.day-solar {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: right;
 }
 
 @media (max-width: 920px) {
