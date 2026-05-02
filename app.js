@@ -13,6 +13,9 @@ const clockDate = document.getElementById("clock-date");
 const clockTime = document.getElementById("clock-time");
 const clockSunrise = document.getElementById("clock-sunrise");
 const clockSunset = document.getElementById("clock-sunset");
+const clockHourHand = document.getElementById("clock-hour-hand");
+const clockMinuteHand = document.getElementById("clock-minute-hand");
+const clockSecondHand = document.getElementById("clock-second-hand");
 const currentIcon = document.getElementById("current-icon");
 const heroQuote = document.getElementById("hero-quote");
 const heroAttribution = document.getElementById("hero-attribution");
@@ -177,6 +180,27 @@ function updateClock() {
     minute: "2-digit",
     timeZone: activeTimeZone
   }).format(now);
+
+  updateAnalogClock(now);
+}
+
+function updateAnalogClock(now) {
+  if (!clockHourHand || !clockMinuteHand || !clockSecondHand) {
+    return;
+  }
+
+  const zonedTime = new Date(now.toLocaleString("en-US", { timeZone: activeTimeZone }));
+  const seconds = zonedTime.getSeconds();
+  const minutes = zonedTime.getMinutes();
+  const hours = zonedTime.getHours() % 12;
+
+  const hourRotation = (hours + minutes / 60) * 30;
+  const minuteRotation = (minutes + seconds / 60) * 6;
+  const secondRotation = seconds * 6;
+
+  clockHourHand.style.transform = `rotate(${hourRotation}deg)`;
+  clockMinuteHand.style.transform = `rotate(${minuteRotation}deg)`;
+  clockSecondHand.style.transform = `rotate(${secondRotation}deg)`;
 }
 
 function setTheme(isDay) {

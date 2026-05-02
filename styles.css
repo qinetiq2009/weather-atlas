@@ -276,6 +276,76 @@ body[data-theme="night"] .search-row input {
   margin-top: 0.35rem;
 }
 
+.clock-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.analog-clock {
+  width: 5.9rem;
+  height: 5.9rem;
+  flex: 0 0 auto;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(23, 36, 46, 0.08);
+}
+
+body[data-theme="night"] .analog-clock {
+  background: rgba(8, 16, 30, 0.84);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.analog-clock-face {
+  width: 100%;
+  height: 100%;
+}
+
+.clock-ring,
+.clock-ticks line {
+  fill: none;
+  stroke: rgba(23, 36, 46, 0.16);
+  stroke-linecap: round;
+}
+
+body[data-theme="night"] .clock-ring,
+body[data-theme="night"] .clock-ticks line {
+  stroke: rgba(255, 255, 255, 0.18);
+}
+
+.clock-ring {
+  stroke-width: 3;
+}
+
+.clock-ticks line {
+  stroke-width: 3;
+}
+
+.clock-center {
+  fill: var(--text);
+}
+
+.clock-hand {
+  stroke: var(--text);
+  stroke-linecap: round;
+  transform-origin: 60px 60px;
+}
+
+.clock-hour-hand {
+  stroke-width: 4.5;
+}
+
+.clock-minute-hand {
+  stroke-width: 3.5;
+}
+
+.clock-second-hand {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
 .clock-time-row {
   display: flex;
   align-items: flex-end;
@@ -759,6 +829,11 @@ body[data-theme="night"] .location-button {
   }
 
   .clock-time-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clock-display {
     align-items: flex-start;
     flex-direction: column;
   }
