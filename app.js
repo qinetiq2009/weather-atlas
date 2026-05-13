@@ -57,6 +57,182 @@ const dailyQuotes = [
   {
     quote: "A change in the weather is sufficient to recreate the world and ourselves.",
     author: "Marcel Proust"
+  },
+  {
+    quote: "Knowing yourself is the beginning of all wisdom.",
+    author: "Aristotle"
+  },
+  {
+    quote: "He who has a why to live can bear almost any how.",
+    author: "Friedrich Nietzsche"
+  },
+  {
+    quote: "The unexamined life is not worth living.",
+    author: "Socrates"
+  },
+  {
+    quote: "What we think, we become.",
+    author: "The Buddha"
+  },
+  {
+    quote: "Simplicity is the ultimate sophistication.",
+    author: "Leonardo da Vinci"
+  },
+  {
+    quote: "Happiness depends upon ourselves.",
+    author: "Aristotle"
+  },
+  {
+    quote: "Freedom is nothing but a chance to be better.",
+    author: "Albert Camus"
+  },
+  {
+    quote: "It always seems impossible until it is done.",
+    author: "Nelson Mandela"
+  },
+  {
+    quote: "The best way out is always through.",
+    author: "Robert Frost"
+  },
+  {
+    quote: "Turn your wounds into wisdom.",
+    author: "Oprah Winfrey"
+  },
+  {
+    quote: "Do what you can, with what you have, where you are.",
+    author: "Theodore Roosevelt"
+  },
+  {
+    quote: "The future depends on what you do today.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    quote: "We become what we repeatedly do.",
+    author: "Will Durant"
+  },
+  {
+    quote: "In the middle of difficulty lies opportunity.",
+    author: "Albert Einstein"
+  },
+  {
+    quote: "No act of kindness, no matter how small, is ever wasted.",
+    author: "Aesop"
+  },
+  {
+    quote: "Life is really simple, but we insist on making it complicated.",
+    author: "Confucius"
+  },
+  {
+    quote: "Well done is better than well said.",
+    author: "Benjamin Franklin"
+  },
+  {
+    quote: "The only true wisdom is in knowing you know nothing.",
+    author: "Socrates"
+  },
+  {
+    quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    author: "Winston Churchill"
+  },
+  {
+    quote: "You must be the change you wish to see in the world.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    quote: "The journey of a thousand miles begins with one step.",
+    author: "Lao Tzu"
+  },
+  {
+    quote: "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+    author: "Ralph Waldo Emerson"
+  },
+  {
+    quote: "The mind is everything. What you think you become.",
+    author: "The Buddha"
+  },
+  {
+    quote: "Courage is grace under pressure.",
+    author: "Ernest Hemingway"
+  },
+  {
+    quote: "An ounce of practice is worth more than tons of preaching.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    quote: "The more I read, the more I acquire, the more certain I am that I know nothing.",
+    author: "Voltaire"
+  },
+  {
+    quote: "Do not wait for leaders; do it alone, person to person.",
+    author: "Mother Teresa"
+  },
+  {
+    quote: "Everything has beauty, but not everyone sees it.",
+    author: "Confucius"
+  },
+  {
+    quote: "To improve is to change; to be perfect is to change often.",
+    author: "Winston Churchill"
+  },
+  {
+    quote: "There is more wisdom in your body than in your deepest philosophy.",
+    author: "Friedrich Nietzsche"
+  },
+  {
+    quote: "The secret of getting ahead is getting started.",
+    author: "Mark Twain"
+  },
+  {
+    quote: "A person who never made a mistake never tried anything new.",
+    author: "Albert Einstein"
+  },
+  {
+    quote: "We suffer more often in imagination than in reality.",
+    author: "Seneca"
+  },
+  {
+    quote: "The whole future lies in uncertainty: live immediately.",
+    author: "Seneca"
+  },
+  {
+    quote: "Act as if what you do makes a difference. It does.",
+    author: "William James"
+  },
+  {
+    quote: "To live is the rarest thing in the world. Most people exist, that is all.",
+    author: "Oscar Wilde"
+  },
+  {
+    quote: "The power of imagination makes us infinite.",
+    author: "John Muir"
+  },
+  {
+    quote: "There are years that ask questions and years that answer.",
+    author: "Zora Neale Hurston"
+  },
+  {
+    quote: "Be yourself; everyone else is already taken.",
+    author: "Oscar Wilde"
+  },
+  {
+    quote: "I have not failed. I've just found 10,000 ways that won't work.",
+    author: "Thomas Edison"
+  },
+  {
+    quote: "The only limit to our realization of tomorrow is our doubts of today.",
+    author: "Franklin D. Roosevelt"
+  },
+  {
+    quote: "You cannot shake hands with a clenched fist.",
+    author: "Indira Gandhi"
+  },
+  {
+    quote: "Not all those who wander are lost.",
+    author: "J. R. R. Tolkien"
+  },
+  {
+    quote: "A room without books is like a body without a soul.",
+    author: "Cicero"
   }
 ];
 
